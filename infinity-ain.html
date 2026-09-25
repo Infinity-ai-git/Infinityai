@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Infinity AI — Choose Your Intelligence. Keep Control.</title>
+<meta name="description" content="Infinity AI builds accessible, flexible AI tools that give you more choice, more control, and more ways to get things done.">
+<meta property="og:title" content="Infinity AI — Choose Your Intelligence. Keep Control.">
+<meta property="og:description" content="Infinity AI builds accessible, flexible AI tools that give you more choice, more control, and more ways to get things done.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0c;
+    --bg-2:#111114;
+    --line:rgba(255,255,255,.09);
+    --text:#f2f2ef;
+    --text-dim:#98979f;
+    --accent:#6a6ff2;
+    --accent-2:#9b7ef2;
+    --white:#ffffff;
+    --maxw:1120px;
+    --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+    --display:'Space Grotesk',var(--sans);
+    box-sizing:border-box;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  *,*::before,*::after{box-sizing:inherit}
+  html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px));color-scheme:dark}
+  body{
+    margin:0;background:var(--bg);color:var(--text);
+    font-family:var(--sans);line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%;display:block}
+  a{color:inherit}
+  h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.08;margin:0;letter-spacing:-.01em}
+  p{margin:0;color:var(--text-dim);max-width:56ch}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
+  section{padding:120px 0}
+  @media (max-width:720px){section{padding:76px 0}}
+  .eyebrow-free{margin-bottom:20px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+
+  /* nav */
+  header{
+    position:sticky;top:0;z-index:40;
+    padding-top:env(safe-area-inset-top,0px);
+    background:rgba(10,10,12,.72);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--line);
+  }
+  nav.wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:600;font-size:18px;color:var(--text)}
+  .brand img{width:26px;height:26px;border-radius:6px;object-fit:cover}
+  .nav-links{display:flex;gap:36px;list-style:none;margin:0;padding:0}
+  .nav-links a{text-decoration:none;color:var(--text-dim);font-size:15px;transition:color .2s}
+  .nav-links a:hover{color:var(--text)}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;
+    padding:11px 22px;border-radius:8px;font-size:15px;font-weight:500;
+    text-decoration:none;cursor:pointer;border:1px solid transparent;
+    transition:transform .2s ease,opacity .2s ease,background .2s ease,border-color .2s ease;
+  }
+  .btn:active{transform:scale(.97)}
+  .btn-primary{background:var(--white);color:#0a0a0c}
+  .btn-primary:hover{opacity:.88}
+  .btn-ghost{border-color:var(--line);color:var(--text)}
+  .btn-ghost:hover{border-color:#4d4d57}
+  .nav-cta{display:flex;align-items:center;gap:14px}
+  .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:8px;color:var(--text);width:40px;height:40px}
+  .mobile-panel{display:none}
+  @media (max-width:820px){
+    .nav-links{display:none}
+    .menu-btn{display:block}
+    .mobile-panel.open{display:flex}
+    .mobile-panel{
+      position:fixed;inset:72px 0 0 0;background:var(--bg);z-index:39;
+      flex-direction:column;gap:2px;padding:20px 28px;border-top:1px solid var(--line);
+    }
+    .mobile-panel a{padding:16px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--text);font-size:17px}
+  }
+
+  /* hero */
+  .hero{padding:100px 0 100px}
+  .hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+  @media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.hero{padding:56px 0 72px}}
+  .hero h1{font-size:clamp(40px,6vw,68px)}
+  .hero .sub{font-family:var(--display);font-weight:500;font-size:clamp(22px,3vw,32px);color:var(--text-dim);margin-top:6px}
+  .hero p.lede{margin-top:26px;font-size:18px;color:var(--text-dim);max-width:46ch}
+  .hero .ctas{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
+  .hero-opacity{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.16,.84,.44,1) forwards}
+  .hero h1{animation-delay:.05s}
+  .hero .sub{animation-delay:.18s}
+  .hero p.lede{animation-delay:.3s}
+  .hero .ctas{animation-delay:.42s}
+  @keyframes rise{to{opacity:1;transform:none}}
+  .mark-wrap{display:flex;justify-content:center;align-items:center}
+  .infinity-mark{width:100%;max-width:380px;overflow:visible;filter:drop-shadow(0 0 34px rgba(106,111,242,.4))}
+  .infinity-mark .mark-base{fill:none;stroke-width:7;stroke-linecap:round;stroke:rgba(154,150,180,.25)}
+  .infinity-mark .mark-flow{fill:none;stroke-width:7;stroke-linecap:round;stroke:url(#infGrad);stroke-dasharray:34 66;animation:flow 3.6s linear infinite}
+  @media (prefers-reduced-motion:reduce){
+    .hero-opacity{animation:none;opacity:1;transform:none}
+    .infinity-mark .mark-flow{animation:none;stroke-dasharray:none}
+  }
+  @keyframes flow{to{stroke-dashoffset:-100}}
+
+  /* products */
+  .lede-section p.section-intro{font-size:18px;margin-bottom:56px}
+  .products{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line)}
+  @media (max-width:760px){.products{grid-template-columns:1fr}}
+  .product{padding:44px 0;border-bottom:1px solid var(--line)}
+  .products .product:first-child{padding-right:44px;border-right:1px solid var(--line)}
+  @media (max-width:760px){.products .product:first-child{border-right:none;padding-right:0}}
+  .product h3{font-size:24px;margin-bottom:14px}
+  .product .tag{display:inline-block;font-size:13px;color:var(--accent-2);margin-bottom:16px}
+
+  /* choose intelligence */
+  .choose .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+  @media (max-width:860px){.choose .wrap{grid-template-columns:1fr;gap:36px}}
+  .intel-list{list-style:none;margin:36px 0 0;padding:0;border-top:1px solid var(--line)}
+  .intel-list li{
+    padding:18px 4px;border-bottom:1px solid var(--line);
+    font-family:var(--display);font-size:20px;color:var(--text-dim);
+    opacity:.4;transition:opacity .5s,color .5s;
+    animation:cycle 9s ease-in-out infinite;
+  }
+  .intel-list li:nth-child(1){animation-delay:0s}
+  .intel-list li:nth-child(2){animation-delay:2.25s}
+  .intel-list li:nth-child(3){animation-delay:4.5s}
+  .intel-list li:nth-child(4){animation-delay:6.75s}
+  @keyframes cycle{0%,8%,100%{opacity:.4;color:var(--text-dim)}18%,32%{opacity:1;color:var(--text)}}
+  @media (prefers-reduced-motion:reduce){.intel-list li{animation:none;opacity:1}}
+
+  /* control */
+  .control .wrap{max-width:720px}
+
+  /* infinity pro */
+  .pro{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .pro .wrap{max-width:760px}
+  .stepper{margin-top:56px;position:relative;padding-left:30px}
+  .stepper::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--line)}
+  .step{position:relative;padding-bottom:40px;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+  .step:last-child{padding-bottom:0}
+  .step::before{content:"";position:absolute;left:-30px;top:4px;width:19px;height:19px;border-radius:50%;background:var(--bg-2);border:1px solid var(--accent)}
+  .stepper.in-view .step{opacity:1;transform:none}
+  .stepper.in-view .step:nth-child(1){transition-delay:.05s}
+  .stepper.in-view .step:nth-child(2){transition-delay:.18s}
+  .stepper.in-view .step:nth-child(3){transition-delay:.31s}
+  .stepper.in-view .step:nth-child(4){transition-delay:.44s}
+  .stepper.in-view .step:nth-child(5){transition-delay:.57s}
+  @media (prefers-reduced-motion:reduce){.step{opacity:1;transform:none;transition:none}}
+  .step h3{font-size:18px;margin-bottom:6px}
+  .step p{font-size:15px}
+
+  /* vision */
+  .vision .wrap{max-width:760px}
+  .vision h2{font-size:clamp(28px,4vw,42px);margin-bottom:24px}
+  .vision p{font-size:19px;color:var(--text);max-width:60ch}
+
+  /* download */
+  .download{text-align:left;border-top:1px solid var(--line)}
+  .download .ctas{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
+  .external-links{margin-top:28px;display:flex;gap:24px;flex-wrap:wrap}
+  .external-links a{font-size:15px;color:var(--text-dim);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px;transition:color .2s,border-color .2s}
+  .external-links a:hover{color:var(--text);border-color:var(--text-dim)}
+
+  footer{border-top:1px solid var(--line);padding:56px 0 40px}
+  .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px}
+  .foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:17px}
+  .foot-brand img{width:24px;height:24px;border-radius:6px;object-fit:cover}
+  .foot-tag{margin-top:10px;font-size:14px;max-width:34ch}
+  .foot-links{display:flex;gap:28px;list-style:none;padding:0;margin:0;flex-wrap:wrap}
+  .foot-links a{font-size:14px;color:var(--text-dim);text-decoration:none}
+  .foot-links a:hover{color:var(--text)}
+  .foot-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--text-dim)}
+</style>
+<link rel="icon" type="image/jpeg" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABQAFADASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAgMFBgABBAf/xAAtEAACAQMCBQQBAwUAAAAAAAABAgMABAUREhMhMUFhBiJRgXEUMkIzYpGh8P/EABoBAAIDAQEAAAAAAAAAAAAAAAEFAgMEAAb/xAAmEQABAwIGAgIDAAAAAAAAAAABAAIDERIEBRMxQVEhwRQiYYHx/9oADAMBAAIRAxEAPwCHVaYFrFFMUV4kle+WgtHtogKILUCVyXtre2mbazbQqglbaArTytARRBRSCtLZa6GWlsKmCuRqKYooFo2dYo2kc6KilifAqBQJp5TAOVGo1Go5jxVJfMQ5/fBcZH9FGx0SBI2dn8HTr8f9rUvDkbfCTLA8rjFxMlvcvwiJA53e5N3MAaDUCmLcsNKPdR3VPaWOzEHyxtW919Kw6Voio22uUsBHDcX0l0JdZOLJp7VPNenbaRqOqn8itWnrDGY63u8lf/0w3CtLYAGSUjmzadhzA1PIeTURlM5mMZ2HPH9QdmkIiEnJ4UnsJUsAdo6nsKWRVDvfXGW9SZGBrqLhYuGdWEEKnhrodfcf5HT5+hXomfubaG4hubYhra4ZR+0oV3cwdD1HmtE2TPZHfG66m6pgzhj5LHtoD+1xsKUwp7cqU1KAna2tcWcmgjxMkdxcLbxzkQmQgnaG69PANdq0m/tjdWTIiqZUIki3AEb15jUH/H3VsJaJWl21QqZw4xODd6KHw72WTntIYraN4seXCT7ObAck1Pz3+xVolgiuIWimQOjDTQjp+Pg1XY83j1ls3srOSESSFrz+Kqz8joDzIDDt5qZt8pb3zmHHSLdXB1CRxnkSB89APNMMxwkus3SqR+O0swGKj0TqeD6VSubrI47MXVs8lvw+GxiToNQu3cAOerDt0JJ6dalrS2tJ7q5wgx0UkFrK3FubhQzueXtB7adD4qKkmv7EgyYIXl3POY5bgtuSYkaqgI5aAjUj+381WrPNX+BzrNO7ytGxSRGJ+xzp25j2QGNpGoQkt7Hzh7gbAV6zwIVg4AiQQ6acMKAun4rzT1Hkbyzllx7XMrJbOFt1ZiRGvI+0dq9AGZsXxqX6zAwOAV+dT2I7GvNcpb3Wa9SbQqotxKFX3DUD5pXlEU0bnmQECnPaZZtLC9jQwgmvHS9Exl8uSxVteLy4qAkfB6H/AGDXQ1ZDBHa20VvCu2OJQijwKxqSvtLzbtVPow4MF2/K0hpq0hTTFNRIU1wPho4smMlbKjTKxcRSsQoY9SpHNSfseKiY8dkZPUN3d22PmsoJV2lBOiI7adSADqvjTv8AVWkGjBrVHj5oxQeeFilwMUhqVH4zFPaz8e5uDM6IIoE11WFB2HTU+dBy5VHepfSEOcnW6hlWC5A2uSuokHbX4PmrFurN1VfLn1da77KXw4dPSt+q8zv8J6mimS1jgJiOiK1ufbp5Pb7qzen/AEpFidtzcyca766jop/PerKTQE1pmzOeVlm3dOVRBlcET79+q8IWpTGjY0tjWIBMktTTVauZWpqtUyEU8NRhqQDRbqrIQTt1ZupW6s3ULVyYWoC1CWoS1SAXLZalMaxmpbNUwEV//9k=">
+</head>
+<body>
+
+<header>
+  <nav class="wrap">
+    <a href="#top" class="brand"><img class="brand-mark" alt="Infinity AI logo" width="26" height="26">Infinity AI</a>
+    <ul class="nav-links">
+      <li><a href="#products">Products</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#download">Download</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="#download" class="btn btn-primary">Get Infinity</a>
+      <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">☰</button>
+    </div>
+  </nav>
+  <div class="mobile-panel" id="mobilePanel">
+    <a href="#products">Products</a>
+    <a href="#about">About</a>
+    <a href="#download">Download</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <h1 class="hero-opacity">Choose your intelligence.<span class="sub">Keep control. Get things done.</span></h1>
+        <p class="lede hero-opacity">Infinity brings modern AI models and autonomous workflows into one place, so you decide how you work with AI — not the other way around.</p>
+        <div class="ctas hero-opacity">
+          <a href="#download" class="btn btn-primary">Get Infinity</a>
+          <a href="#infinity-pro" class="btn btn-ghost">Explore Infinity Pro</a>
+        </div>
+      </div>
+      <div class="mark-wrap">
+        <svg class="infinity-mark" viewBox="0 0 200 120" aria-hidden="true">
+          <defs>
+            <linearGradient id="infGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#9b7ef2"/>
+              <stop offset="1" stop-color="#6a6ff2"/>
+            </linearGradient>
+          </defs>
+          <path class="mark-base" pathLength="100" d="M100,60 C70,20 20,20 20,60 C20,100 70,100 100,60 C130,20 180,20 180,60 C180,100 130,100 100,60 Z"/>
+          <path class="mark-flow" pathLength="100" d="M100,60 C70,20 20,20 20,60 C20,100 70,100 100,60 C130,20 180,20 180,60 C180,100 130,100 100,60 Z"/>
+        </svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="products" class="lede-section">
+    <div class="wrap">
+      <h2 class="eyebrow-free" style="font-size:clamp(28px,4vw,42px)">AI without the lock-in.</h2>
+      <p class="section-intro">Infinity AI builds products that let you work with different models and providers, while keeping the control in your hands.</p>
+      <div class="products">
+        <div class="product">
+          <span class="tag">Everyday AI</span>
+          <h3>Infinity</h3>
+          <p>Chat across multiple models, bring your own files, and do focused research — with your provider choices in your hands. Available on desktop and Android.</p>
+        </div>
+        <div class="product">
+          <span class="tag">Autonomous work</span>
+          <h3>Infinity Pro</h3>
+          <p>Give AI a goal, and let it work through the task — researching, building, and checking its own output across multi-step workflows.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="choose">
+    <div class="wrap">
+      <div>
+        <h2 style="font-size:clamp(28px,4vw,40px)">One place. Your choice of intelligence.</h2>
+        <p style="margin-top:20px;font-size:17px">AI is moving fast, and no single model is best at everything. Infinity is built around choice — switch between models suited to speed, depth, or creativity, without starting over.</p>
+      </div>
+      <ul class="intel-list" aria-hidden="true">
+        <li>Fast answers</li>
+        <li>Deep reasoning</li>
+        <li>Creative work</li>
+        <li>Long-context research</li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="about" class="control">
+    <div class="wrap">
+      <h2 style="font-size:clamp(28px,4vw,40px)">Your AI. Your control.</h2>
+      <p style="margin-top:20px;font-size:17px">Connect the providers you already use, or rely on Infinity's built-in defaults. Choose the models that fit each task. Change your setup whenever your needs change — nothing about Infinity is locked in.</p>
+    </div>
+  </section>
+
+  <section id="infinity-pro" class="pro">
+    <div class="wrap">
+      <h2 style="font-size:clamp(28px,4vw,40px)">Don't just ask AI. Give it a job.</h2>
+      <p style="margin-top:20px;font-size:17px">Some work takes more than a single answer. Infinity Pro takes a goal and carries it through — researching, drafting, checking its own output, and recovering when something doesn't go to plan.</p>
+      <div class="stepper" id="stepper">
+        <div class="step"><h3>Research</h3><p>Gathers the sources and context the task actually needs.</p></div>
+        <div class="step"><h3>Analyze</h3><p>Works through what it found and figures out an approach.</p></div>
+        <div class="step"><h3>Create</h3><p>Produces the report, document, or output the task calls for.</p></div>
+        <div class="step"><h3>Verify</h3><p>Checks its own work against the original goal.</p></div>
+        <div class="step"><h3>Done</h3><p>Delivers the result, ready for you to review.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="vision">
+    <div class="wrap">
+      <h2>We're building AI for people who want more control.</h2>
+      <p>We think AI works best when it's accessible instead of gatekept, flexible instead of fixed, and understandable instead of a black box. Infinity is our attempt to build that — a small, honest AI company that would rather ship something useful than announce something huge.</p>
+    </div>
+  </section>
+
+  <section id="download" class="download">
+    <div class="wrap">
+      <h2 style="font-size:clamp(28px,4vw,42px)">Take Infinity with you.</h2>
+      <p style="margin-top:14px;font-size:18px">Available across your devices.</p>
+      <div class="ctas">
+        <a href="#" id="winDownload" class="btn btn-primary">Download for Windows</a>
+        <a href="#" id="androidDownload" class="btn btn-ghost">Get it for Android</a>
+      </div>
+      <div class="external-links">
+        <a href="#" id="githubLink">View on GitHub</a>
+        <a href="#" id="linkedinLink">LinkedIn</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <div class="foot-brand"><img class="brand-mark" alt="Infinity AI logo" width="24" height="24">Infinity AI</div>
+        <p class="foot-tag">Choose your intelligence. Keep control. Get things done.</p>
+      </div>
+      <ul class="foot-links">
+        <li><a href="#products">Products</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="#" id="githubLink2">GitHub</a></li>
+        <li><a href="#" id="linkedinLink2">LinkedIn</a></li>
+      </ul>
+    </div>
+    <div class="foot-bottom">© 2026 Infinity AI</div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  // brand mark — single small embed reused across nav + footer
+  var LOGO_SRC = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABQAFADASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAgMFBgABBAf/xAAtEAACAQMCBQQBAwUAAAAAAAABAgMABAUREhMhMUFhBiJRgXEUMkIzYpGh8P/EABoBAAIDAQEAAAAAAAAAAAAAAAEFAgMEAAb/xAAmEQABAwIGAgIDAAAAAAAAAAABAAIDERIEBRMxQVEhwRQiYYHx/9oADAMBAAIRAxEAPwCHVaYFrFFMUV4kle+WgtHtogKILUCVyXtre2mbazbQqglbaArTytARRBRSCtLZa6GWlsKmCuRqKYooFo2dYo2kc6KilifAqBQJp5TAOVGo1Go5jxVJfMQ5/fBcZH9FGx0SBI2dn8HTr8f9rUvDkbfCTLA8rjFxMlvcvwiJA53e5N3MAaDUCmLcsNKPdR3VPaWOzEHyxtW919Kw6Voio22uUsBHDcX0l0JdZOLJp7VPNenbaRqOqn8itWnrDGY63u8lf/0w3CtLYAGSUjmzadhzA1PIeTURlM5mMZ2HPH9QdmkIiEnJ4UnsJUsAdo6nsKWRVDvfXGW9SZGBrqLhYuGdWEEKnhrodfcf5HT5+hXomfubaG4hubYhra4ZR+0oV3cwdD1HmtE2TPZHfG66m6pgzhj5LHtoD+1xsKUwp7cqU1KAna2tcWcmgjxMkdxcLbxzkQmQgnaG69PANdq0m/tjdWTIiqZUIki3AEb15jUH/H3VsJaJWl21QqZw4xODd6KHw72WTntIYraN4seXCT7ObAck1Pz3+xVolgiuIWimQOjDTQjp+Pg1XY83j1ls3srOSESSFrz+Kqz8joDzIDDt5qZt8pb3zmHHSLdXB1CRxnkSB89APNMMxwkus3SqR+O0swGKj0TqeD6VSubrI47MXVs8lvw+GxiToNQu3cAOerDt0JJ6dalrS2tJ7q5wgx0UkFrK3FubhQzueXtB7adD4qKkmv7EgyYIXl3POY5bgtuSYkaqgI5aAjUj+381WrPNX+BzrNO7ytGxSRGJ+xzp25j2QGNpGoQkt7Hzh7gbAV6zwIVg4AiQQ6acMKAun4rzT1Hkbyzllx7XMrJbOFt1ZiRGvI+0dq9AGZsXxqX6zAwOAV+dT2I7GvNcpb3Wa9SbQqotxKFX3DUD5pXlEU0bnmQECnPaZZtLC9jQwgmvHS9Exl8uSxVteLy4qAkfB6H/AGDXQ1ZDBHa20VvCu2OJQijwKxqSvtLzbtVPow4MF2/K0hpq0hTTFNRIU1wPho4smMlbKjTKxcRSsQoY9SpHNSfseKiY8dkZPUN3d22PmsoJV2lBOiI7adSADqvjTv8AVWkGjBrVHj5oxQeeFilwMUhqVH4zFPaz8e5uDM6IIoE11WFB2HTU+dBy5VHepfSEOcnW6hlWC5A2uSuokHbX4PmrFurN1VfLn1da77KXw4dPSt+q8zv8J6mimS1jgJiOiK1ufbp5Pb7qzen/AEpFidtzcyca766jop/PerKTQE1pmzOeVlm3dOVRBlcET79+q8IWpTGjY0tjWIBMktTTVauZWpqtUyEU8NRhqQDRbqrIQTt1ZupW6s3ULVyYWoC1CWoS1SAXLZalMaxmpbNUwEV//9k=";
+  document.querySelectorAll('.brand-mark').forEach(function(el){ el.src = LOGO_SRC; });
+
+  // external links — placeholders until real URLs are supplied
+  var CONFIG = {
+    github: "#",
+    linkedin: "#",
+    windowsDownload: "https://github.com/Infinity-ai-git/Infinity/releases/tag/v1.0.0",
+    androidDownload: "#"
+  };
+  var map = {winDownload:'windowsDownload', androidDownload:'androidDownload', githubLink:'github', linkedinLink:'linkedin', githubLink2:'github', linkedinLink2:'linkedin'};
+  Object.keys(map).forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.href = CONFIG[map[id]];
+  });
+
+  // mobile menu
+  var menuBtn = document.getElementById('menuBtn');
+  var panel = document.getElementById('mobilePanel');
+  menuBtn.addEventListener('click', function(){
+    var open = panel.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn.textContent = open ? '✕' : '☰';
+  });
+  panel.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      panel.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded','false');
+      menuBtn.textContent = '☰';
+    });
+  });
+
+  // stepper reveal
+  var stepper = document.getElementById('stepper');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce){ stepper.classList.add('in-view'); }
+  else if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ stepper.classList.add('in-view'); io.disconnect(); }
+      });
+    }, {threshold:.3});
+    io.observe(stepper);
+  } else {
+    stepper.classList.add('in-view');
+  }
+})();
+</script>
+</body>
+</html>

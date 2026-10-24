@@ -8,190 +8,342 @@
 <meta property="og:title" content="Infinity AI — Choose Your Intelligence. Keep Control.">
 <meta property="og:description" content="Infinity AI builds accessible, flexible AI tools that give you more choice, more control, and more ways to get things done.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#0a0a0c">
+<meta name="theme-color" content="#080808">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="icon" id="favicon" type="image/jpeg" href="data:,">
 <style>
   :root{
-    --bg:#0a0a0c;
-    --bg-2:#111114;
-    --line:rgba(255,255,255,.09);
-    --text:#f2f2ef;
-    --text-dim:#98979f;
-    --accent:#6a6ff2;
-    --accent-2:#9b7ef2;
-    --white:#ffffff;
-    --maxw:1120px;
+    --bg:#080808;
+    --bg-1:#0e0e0e;
+    --bg-2:#161616;
+    --line:rgba(255,255,255,.08);
+    --line-2:rgba(255,255,255,.14);
+    --text:#f5f4f2;
+    --text-2:#b7b4b0;
+    --text-3:#85817c;
+    --accent:#ff6a1a;
+    --accent-2:#ffa047;
+    --cyan:#b9b6b2;
+    --ok:#ffa047;
+    --maxw:1180px;
     --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
-    --display:'Space Grotesk',var(--sans);
-    box-sizing:border-box;
-    padding-top:env(safe-area-inset-top,0px);
-    padding-bottom:env(safe-area-inset-bottom,0px);
+    --display:'Bricolage Grotesque','Inter',sans-serif;
+    --ease:cubic-bezier(.2,.8,.2,1);
   }
-  *,*::before,*::after{box-sizing:inherit}
-  html{scroll-behavior:smooth;scroll-padding-top:calc(72px + env(safe-area-inset-top,0px));color-scheme:dark}
+  *,*::before,*::after{box-sizing:border-box}
+  html{scroll-behavior:smooth;scroll-padding-top:96px;color-scheme:dark;-webkit-text-size-adjust:100%}
   body{
     margin:0;background:var(--bg);color:var(--text);
-    font-family:var(--sans);line-height:1.6;
-    -webkit-font-smoothing:antialiased;
+    font-family:var(--sans);font-size:16px;line-height:1.6;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+    overflow-x:hidden;
   }
   img{max-width:100%;display:block}
   a{color:inherit}
-  h1,h2,h3{font-family:var(--display);font-weight:600;line-height:1.08;margin:0;letter-spacing:-.01em}
-  p{margin:0;color:var(--text-dim);max-width:56ch}
+  h1,h2,h3,h4{font-family:var(--display);font-weight:600;margin:0;letter-spacing:-.025em;line-height:1.04}
+  p{margin:0;color:var(--text-2)}
+  button{font:inherit;color:inherit}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px}
-  section{padding:120px 0}
-  @media (max-width:720px){section{padding:76px 0}}
-  .eyebrow-free{margin-bottom:20px}
-  :focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:4px}
+  section{position:relative;padding:136px 0}
+  @media (max-width:720px){section{padding:84px 0}.wrap{padding:0 20px}}
+  :focus-visible{outline:2px solid var(--cyan);outline-offset:3px;border-radius:8px}
+  .skip{position:absolute;left:-999px;top:8px;background:#fff;color:#000;padding:10px 16px;border-radius:8px;z-index:100}
+  .skip:focus{left:12px}
+
+  /* ambient backdrop */
+  .aurora{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+  .aurora::before,.aurora::after{content:"";position:absolute;border-radius:50%;filter:blur(120px);opacity:.5}
+  .aurora::before{width:720px;height:720px;left:-12%;top:-18%;background:radial-gradient(circle,rgba(255,106,26,.5),transparent 68%)}
+  .aurora::after{width:640px;height:640px;right:-14%;top:12%;background:radial-gradient(circle,rgba(255,160,71,.34),transparent 68%)}
+  .grain{position:fixed;inset:0;pointer-events:none;z-index:-1;opacity:.5;
+    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+    background-size:72px 72px;
+    -webkit-mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 10%,transparent 75%);
+            mask-image:radial-gradient(ellipse 70% 55% at 50% 0%,#000 10%,transparent 75%);
+  }
 
   /* nav */
-  header{
-    position:sticky;top:0;z-index:40;
-    padding-top:env(safe-area-inset-top,0px);
-    background:rgba(10,10,12,.72);backdrop-filter:blur(14px);
-    border-bottom:1px solid var(--line);
+  header{position:fixed;top:0;left:0;right:0;z-index:50;padding:14px 16px 0;padding-top:calc(14px + env(safe-area-inset-top,0px));pointer-events:none}
+  .nav{
+    pointer-events:auto;max-width:960px;margin:0 auto;height:60px;padding:0 10px 0 20px;
+    display:flex;align-items:center;justify-content:space-between;
+    background:rgba(14,14,14,.55);border:1px solid var(--line);border-radius:999px;
+    -webkit-backdrop-filter:blur(22px) saturate(1.6);backdrop-filter:blur(22px) saturate(1.6);
+    transition:background .3s,border-color .3s,box-shadow .3s;
   }
-  nav.wrap{display:flex;align-items:center;justify-content:space-between;height:72px}
-  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:600;font-size:18px;color:var(--text)}
-  .brand img{width:26px;height:26px;border-radius:6px;object-fit:cover}
-  .nav-links{display:flex;gap:36px;list-style:none;margin:0;padding:0}
-  .nav-links a{text-decoration:none;color:var(--text-dim);font-size:15px;transition:color .2s}
-  .nav-links a:hover{color:var(--text)}
+  .nav.scrolled{background:rgba(10,10,10,.82);border-color:var(--line-2);box-shadow:0 18px 50px -18px rgba(0,0,0,.8)}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-weight:600;font-size:18px;letter-spacing:-.02em}
+  .brand img{width:28px;height:28px;border-radius:8px;object-fit:cover;box-shadow:0 0 0 1px var(--line-2)}
+  .nav-links{display:flex;gap:6px;list-style:none;margin:0;padding:0}
+  .nav-links a{display:block;padding:8px 16px;border-radius:999px;text-decoration:none;color:var(--text-2);font-size:14.5px;font-weight:500;transition:color .2s,background .2s}
+  .nav-links a:hover{color:var(--text);background:rgba(255,255,255,.06)}
+  .nav-cta{display:flex;align-items:center;gap:8px}
+  .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:999px;width:40px;height:40px;cursor:pointer;font-size:16px}
+  .mobile-panel{display:none;pointer-events:auto;max-width:960px;margin:8px auto 0;padding:8px;background:rgba(10,10,10,.94);border:1px solid var(--line-2);border-radius:24px;-webkit-backdrop-filter:blur(22px);backdrop-filter:blur(22px);flex-direction:column}
+  .mobile-panel.open{display:flex}
+  .mobile-panel a{padding:15px 16px;text-decoration:none;font-size:16px;border-radius:14px}
+  .mobile-panel a:hover{background:rgba(255,255,255,.06)}
+  @media (max-width:820px){.nav-links{display:none}.menu-btn{display:block}}
+
+  /* buttons */
   .btn{
-    display:inline-flex;align-items:center;justify-content:center;
-    padding:11px 22px;border-radius:8px;font-size:15px;font-weight:500;
-    text-decoration:none;cursor:pointer;border:1px solid transparent;
-    transition:transform .2s ease,opacity .2s ease,background .2s ease,border-color .2s ease;
+    position:relative;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+    padding:13px 24px;border-radius:999px;font-size:15px;font-weight:500;
+    text-decoration:none;cursor:pointer;border:1px solid transparent;white-space:nowrap;
+    transition:transform .25s var(--ease),box-shadow .25s,background .25s,border-color .25s,color .25s;
   }
   .btn:active{transform:scale(.97)}
-  .btn-primary{background:var(--white);color:#0a0a0c}
-  .btn-primary:hover{opacity:.88}
-  .btn-ghost{border-color:var(--line);color:var(--text)}
-  .btn-ghost:hover{border-color:#4d4d57}
-  .nav-cta{display:flex;align-items:center;gap:14px}
-  .menu-btn{display:none;background:none;border:1px solid var(--line);border-radius:8px;color:var(--text);width:40px;height:40px}
-  .mobile-panel{display:none}
-  @media (max-width:820px){
-    .nav-links{display:none}
-    .menu-btn{display:block}
-    .mobile-panel.open{display:flex}
-    .mobile-panel{
-      position:fixed;inset:72px 0 0 0;background:var(--bg);z-index:39;
-      flex-direction:column;gap:2px;padding:20px 28px;border-top:1px solid var(--line);
-    }
-    .mobile-panel a{padding:16px 4px;border-bottom:1px solid var(--line);text-decoration:none;color:var(--text);font-size:17px}
-  }
+  .btn-primary{background:#fff;color:#0a0a0a;box-shadow:0 0 0 1px rgba(255,255,255,.4),0 10px 30px -10px rgba(255,160,71,.65)}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 0 0 1px #fff,0 16px 40px -10px rgba(255,160,71,.9)}
+  .btn-ghost{background:rgba(255,255,255,.04);border-color:var(--line-2);color:var(--text)}
+  .btn-ghost:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.28)}
+  .btn-sm{padding:9px 18px;font-size:14px}
+  .btn svg{width:18px;height:18px;flex:none}
 
   /* hero */
-  .hero{padding:100px 0 100px}
-  .hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
-  @media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.hero{padding:56px 0 72px}}
-  .hero h1{font-size:clamp(40px,6vw,68px)}
-  .hero .sub{font-family:var(--display);font-weight:500;font-size:clamp(22px,3vw,32px);color:var(--text-dim);margin-top:6px}
-  .hero p.lede{margin-top:26px;font-size:18px;color:var(--text-dim);max-width:46ch}
-  .hero .ctas{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
-  .hero-opacity{opacity:0;transform:translateY(14px);animation:rise .8s cubic-bezier(.16,.84,.44,1) forwards}
-  .hero h1{animation-delay:.05s}
-  .hero .sub{animation-delay:.18s}
-  .hero p.lede{animation-delay:.3s}
-  .hero .ctas{animation-delay:.42s}
+  .hero{padding:176px 0 100px;overflow:hidden}
+  @media (max-width:720px){.hero{padding:132px 0 64px}}
+  .hero-copy{max-width:820px}
+  .hero h1{font-size:clamp(46px,8.4vw,104px);letter-spacing:-.045em;line-height:.98}
+  .hero h1 .sub{display:block;margin-top:18px;font-size:clamp(22px,3.1vw,38px);letter-spacing:-.03em;line-height:1.15;font-weight:500;color:var(--text-2)}
+  .hero .lede{margin-top:30px;font-size:clamp(17px,1.5vw,20px);max-width:52ch;color:var(--text-2)}
+  .hero .ctas{margin-top:40px;display:flex;gap:12px;flex-wrap:wrap}
+  .hero-in{opacity:0;transform:translateY(18px);animation:rise 1s var(--ease) forwards}
+  .hero-in.d1{animation-delay:.05s}.hero-in.d2{animation-delay:.18s}.hero-in.d3{animation-delay:.3s}.hero-in.d4{animation-delay:.42s}.hero-in.d5{animation-delay:.6s}
   @keyframes rise{to{opacity:1;transform:none}}
-  .mark-wrap{display:flex;justify-content:center;align-items:center}
-  .infinity-mark{width:100%;max-width:380px;overflow:visible;filter:drop-shadow(0 0 34px rgba(106,111,242,.4))}
-  .infinity-mark .mark-base{fill:none;stroke-width:7;stroke-linecap:round;stroke:rgba(154,150,180,.25)}
-  .infinity-mark .mark-flow{fill:none;stroke-width:7;stroke-linecap:round;stroke:url(#infGrad);stroke-dasharray:34 66;animation:flow 3.6s linear infinite}
-  @media (prefers-reduced-motion:reduce){
-    .hero-opacity{animation:none;opacity:1;transform:none}
-    .infinity-mark .mark-flow{animation:none;stroke-dasharray:none}
-  }
+
+  .stage{position:relative;margin-top:84px}
+  @media (max-width:720px){.stage{margin-top:56px}}
+  .stage-mark{position:absolute;left:50%;top:50%;width:min(1280px,150%);transform:translate(-50%,-52%);z-index:0;pointer-events:none;opacity:.9}
+  .infinity-mark{width:100%;overflow:visible;filter:drop-shadow(0 0 40px rgba(255,106,26,.45))}
+  .mark-base{fill:none;stroke-width:1.1;stroke:rgba(190,185,180,.22)}
+  .mark-flow{fill:none;stroke-width:1.6;stroke-linecap:round;stroke:url(#infGrad);stroke-dasharray:14 86;animation:flow 7s linear infinite}
   @keyframes flow{to{stroke-dashoffset:-100}}
 
-  /* products */
-  .lede-section p.section-intro{font-size:18px;margin-bottom:56px}
-  .products{display:grid;grid-template-columns:1fr 1fr;gap:0;border-top:1px solid var(--line)}
-  @media (max-width:760px){.products{grid-template-columns:1fr}}
-  .product{padding:44px 0;border-bottom:1px solid var(--line)}
-  .products .product:first-child{padding-right:44px;border-right:1px solid var(--line)}
-  @media (max-width:760px){.products .product:first-child{border-right:none;padding-right:0}}
-  .product h3{font-size:24px;margin-bottom:14px}
-  .product .tag{display:inline-block;font-size:13px;color:var(--accent-2);margin-bottom:16px}
-
-  /* choose intelligence */
-  .choose .wrap{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-  @media (max-width:860px){.choose .wrap{grid-template-columns:1fr;gap:36px}}
-  .intel-list{list-style:none;margin:36px 0 0;padding:0;border-top:1px solid var(--line)}
-  .intel-list li{
-    padding:18px 4px;border-bottom:1px solid var(--line);
-    font-family:var(--display);font-size:20px;color:var(--text-dim);
-    opacity:.4;transition:opacity .5s,color .5s;
-    animation:cycle 9s ease-in-out infinite;
+  .app{
+    position:relative;z-index:1;border-radius:22px;overflow:hidden;
+    background:linear-gradient(180deg,rgba(25,25,25,.92),rgba(13,13,13,.94));
+    border:1px solid var(--line-2);
+    box-shadow:0 60px 120px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.03) inset,0 40px 120px -60px rgba(255,106,26,.6);
+    -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
   }
-  .intel-list li:nth-child(1){animation-delay:0s}
-  .intel-list li:nth-child(2){animation-delay:2.25s}
-  .intel-list li:nth-child(3){animation-delay:4.5s}
-  .intel-list li:nth-child(4){animation-delay:6.75s}
-  @keyframes cycle{0%,8%,100%{opacity:.4;color:var(--text-dim)}18%,32%{opacity:1;color:var(--text)}}
-  @media (prefers-reduced-motion:reduce){.intel-list li{animation:none;opacity:1}}
+  .app-bar{display:flex;align-items:center;gap:14px;padding:14px 18px;border-bottom:1px solid var(--line)}
+  .dots{display:flex;gap:7px}.dots i{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,.14)}
+  .app-title{flex:1;text-align:center;font-size:13px;color:var(--text-3);font-weight:500}
+  .app-body{display:grid;grid-template-columns:232px 1fr;min-height:430px}
+  @media (max-width:820px){.app-body{grid-template-columns:1fr}.side{display:none}}
+  .side{border-right:1px solid var(--line);padding:18px 14px;display:flex;flex-direction:column;gap:6px;background:rgba(255,255,255,.015)}
+  .side-new{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:12px;background:rgba(255,106,26,.16);border:1px solid rgba(255,106,26,.35);font-size:14px;font-weight:500;margin-bottom:12px}
+  .side-label{font-size:12px;color:var(--text-3);padding:6px 12px;font-weight:500}
+  .side-item{padding:9px 12px;border-radius:10px;font-size:13.5px;color:var(--text-2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .side-item.on{background:rgba(255,255,255,.07);color:var(--text)}
+  .chat{display:flex;flex-direction:column;padding:26px clamp(18px,3.4vw,40px) 22px;gap:18px}
+  .msg-user{align-self:flex-end;max-width:78%;padding:13px 18px;border-radius:20px 20px 6px 20px;background:rgba(255,106,26,.22);border:1px solid rgba(255,106,26,.4);font-size:15px;color:var(--text)}
+  .msg-ai{display:flex;gap:14px;align-items:flex-start}
+  .avatar{flex:none;width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--accent-2),var(--accent));display:grid;place-items:center}
+  .avatar svg{width:18px;height:18px}
+  .ai-col{flex:1;min-width:0}
+  .ai-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:13px;color:var(--text-3)}
+  .ai-meta b{font-weight:500;color:var(--text);transition:opacity .3s}
+  .lines{display:flex;flex-direction:column;gap:10px}
+  .lines span{display:block;height:9px;border-radius:6px;background:linear-gradient(90deg,rgba(255,255,255,.14),rgba(255,255,255,.06));transition:width .7s var(--ease)}
+  .composer{margin-top:auto;padding:12px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--line-2)}
+  .composer .ph{padding:6px 8px 14px;font-size:14.5px;color:var(--text-3)}
+  .composer-row{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .chips{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text-2);padding:6px 12px;border-radius:999px;font-size:12.5px;font-weight:500;cursor:pointer;transition:all .3s var(--ease)}
+  .chip:hover{color:var(--text);border-color:var(--line-2)}
+  .chip.on{background:#fff;color:#0a0a0a;border-color:#fff}
+  .send{width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--accent-2),var(--accent));display:grid;place-items:center;flex:none}
+  .send svg{width:16px;height:16px}
 
-  /* control */
-  .control .wrap{max-width:720px}
+  /* section heads */
+  .kicker{display:inline-flex;align-items:center;gap:10px;font-size:14px;color:var(--text-2);font-weight:500;margin-bottom:22px}
+  .kicker::before{content:"";width:22px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--accent-2),var(--accent))}
+  .h2{font-size:clamp(34px,5.4vw,66px);letter-spacing:-.04em;line-height:1.02;max-width:17ch}
+  .section-intro{margin-top:24px;font-size:clamp(17px,1.4vw,19px);max-width:54ch}
 
-  /* infinity pro */
-  .pro{background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-  .pro .wrap{max-width:760px}
-  .stepper{margin-top:56px;position:relative;padding-left:30px}
-  .stepper::before{content:"";position:absolute;left:9px;top:8px;bottom:8px;width:1px;background:var(--line)}
-  .step{position:relative;padding-bottom:40px;opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+  /* surfaces with spotlight */
+  .surface{position:relative;border-radius:28px;background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015));border:1px solid var(--line);overflow:hidden;transition:border-color .3s}
+  .surface::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .35s;
+    background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(255,140,60,.16),transparent 62%)}
+  .surface:hover{border-color:var(--line-2)}
+  .surface:hover::before{opacity:1}
+
+  /* products */
+  .products{margin-top:72px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  @media (max-width:900px){.products{grid-template-columns:1fr}}
+  .product{padding:40px;display:flex;flex-direction:column;min-height:540px}
+  @media (max-width:560px){.product{padding:28px 24px;min-height:0}}
+  .pill{align-self:flex-start;padding:5px 14px;border-radius:999px;font-size:13px;font-weight:500;color:#ffc9a0;background:rgba(255,160,71,.12);border:1px solid rgba(255,160,71,.32)}
+  .product h3{margin-top:22px;font-size:clamp(34px,4vw,48px);letter-spacing:-.04em}
+  .product p{margin-top:14px;font-size:16.5px;max-width:42ch}
+  .product .viz{margin-top:auto;padding-top:40px}
+  .viz-card{border-radius:18px;background:rgba(0,0,0,.35);border:1px solid var(--line);padding:18px}
+  .mini-row{display:flex;align-items:center;gap:12px}
+  .mini-row + .mini-row{margin-top:12px}
+  .mini-ico{flex:none;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:rgba(255,255,255,.07);color:var(--text-2)}
+  .mini-ico svg{width:16px;height:16px}
+  .mini-txt{flex:1;font-size:13.5px;color:var(--text-2)}
+  .mini-tag{font-size:12px;color:var(--text-3)}
+  .taskline{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--text-2)}
+  .taskline + .taskline{margin-top:13px}
+  .tick{flex:none;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:rgba(255,160,71,.14);border:1px solid rgba(255,160,71,.45);color:var(--ok)}
+  .tick svg{width:11px;height:11px}
+  .tick.run{background:none;border-color:rgba(255,160,71,.5);border-top-color:var(--accent-2);animation:spin 1s linear infinite}
+  .tick.wait{background:none;border-color:var(--line-2)}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .bar{height:6px;border-radius:6px;background:rgba(255,255,255,.08);overflow:hidden;margin-top:16px}
+  .bar i{display:block;height:100%;width:62%;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));animation:fillbar 6s ease-in-out infinite}
+  @keyframes fillbar{0%{width:12%}70%,100%{width:92%}}
+
+  /* choose */
+  .choose-grid{margin-top:72px;display:grid;grid-template-columns:.9fr 1.1fr;gap:20px;align-items:stretch}
+  @media (max-width:900px){.choose-grid{grid-template-columns:1fr}}
+  .tabs{display:flex;flex-direction:column;gap:6px}
+  .tab{
+    text-align:left;cursor:pointer;background:none;border:1px solid transparent;border-radius:20px;padding:22px 24px;
+    font-family:var(--display);font-size:clamp(22px,2.4vw,30px);letter-spacing:-.03em;color:var(--text-3);
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    transition:color .3s,background .3s,border-color .3s;
+  }
+  .tab:hover{color:var(--text-2)}
+  .tab[aria-selected="true"]{color:var(--text);background:rgba(255,255,255,.05);border-color:var(--line-2)}
+  .tab .arrow{opacity:0;transform:translateX(-6px);transition:all .3s var(--ease);width:22px;height:22px}
+  .tab[aria-selected="true"] .arrow{opacity:1;transform:none}
+  .tabpanel{padding:40px;display:flex;flex-direction:column;justify-content:space-between;gap:36px;min-height:360px}
+  @media (max-width:560px){.tabpanel{padding:28px 24px}}
+  .tabpanel h3{font-size:clamp(26px,3vw,38px);letter-spacing:-.035em}
+  .tabpanel p.cap{margin-top:12px;font-size:17px;max-width:40ch;min-height:3.2em}
+  .meters{display:flex;flex-direction:column;gap:20px}
+  .meter-head{display:flex;justify-content:space-between;font-size:13.5px;color:var(--text-2);margin-bottom:9px}
+  .meter-track{height:8px;border-radius:8px;background:rgba(255,255,255,.07);overflow:hidden}
+  .meter-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .8s var(--ease)}
+  .meter-fill.alt{background:linear-gradient(90deg,var(--cyan),var(--accent))}
+
+  /* control bento */
+  .bento{margin-top:72px;display:grid;grid-template-columns:repeat(6,1fr);gap:20px}
+  .b1{grid-column:span 4}.b2{grid-column:span 2}.b3{grid-column:span 6}
+  @media (max-width:900px){.b1,.b2,.b3{grid-column:span 6}}
+  .bento .surface{padding:36px}
+  @media (max-width:560px){.bento .surface{padding:26px 22px}}
+  .bento h3{font-size:clamp(24px,2.6vw,32px);letter-spacing:-.035em}
+  .bento p{margin-top:12px;max-width:44ch;font-size:16px}
+  .providers{margin-top:34px;display:flex;flex-wrap:wrap;gap:10px}
+  .prov{display:flex;align-items:center;gap:10px;padding:10px 16px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--line);font-size:14px;color:var(--text-2)}
+  .prov i{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 12px rgba(255,160,71,.7)}
+  .prov.dash{border-style:dashed;color:var(--text-3)}
+  .prov.dash i{background:var(--text-3);box-shadow:none}
+  .toggle-demo{margin-top:34px;display:flex;flex-direction:column;gap:12px}
+  .tg{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:14px;background:rgba(0,0,0,.35);border:1px solid var(--line);font-size:14px;color:var(--text-2)}
+  .sw{width:38px;height:22px;border-radius:22px;background:rgba(255,255,255,.12);position:relative;transition:background .3s}
+  .sw::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .3s var(--ease)}
+  .sw.on{background:var(--accent)}.sw.on::after{transform:translateX(16px)}
+  .b3-inner{display:flex;align-items:center;justify-content:space-between;gap:36px;flex-wrap:wrap}
+  .b3-inner h3{max-width:20ch}
+  .free{display:flex;gap:10px;flex-wrap:wrap}
+  .free span{padding:9px 16px;border-radius:999px;border:1px solid var(--line-2);font-size:14px;color:var(--text-2);background:rgba(255,255,255,.03)}
+
+  /* pro */
+  .pro{background:linear-gradient(180deg,transparent,rgba(255,106,26,.07) 40%,transparent)}
+  .pro-grid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start}
+  @media (max-width:900px){.pro-grid{grid-template-columns:1fr;gap:48px}}
+  .pro-left{position:sticky;top:120px}
+  @media (max-width:900px){.pro-left{position:static}}
+  .live{margin-top:44px;padding:26px}
+  .live-head{display:flex;justify-content:space-between;align-items:center;font-size:13.5px;color:var(--text-3);margin-bottom:6px}
+  .live-goal{font-family:var(--display);font-size:22px;letter-spacing:-.03em;color:var(--text);margin-bottom:6px}
+  .live-state{display:flex;align-items:center;gap:10px;margin-top:18px;font-size:14.5px;color:var(--text)}
+  .live-state .dot{width:8px;height:8px;border-radius:50%;background:var(--accent-2);box-shadow:0 0 14px var(--accent-2);transition:background .4s,box-shadow .4s}
+  .live-state.done .dot{background:var(--ok);box-shadow:0 0 14px var(--ok)}
+  .prog{height:6px;border-radius:6px;background:rgba(255,255,255,.08);margin-top:14px;overflow:hidden}
+  .prog i{display:block;height:100%;width:20%;border-radius:6px;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .7s var(--ease)}
+  .steps{position:relative;list-style:none;margin:0;padding:0 0 0 46px}
+  .steps::before{content:"";position:absolute;left:15px;top:14px;bottom:14px;width:2px;background:var(--line)}
+  .rail{position:absolute;left:15px;top:14px;width:2px;height:0;background:linear-gradient(180deg,var(--accent-2),var(--accent));transition:height .7s var(--ease)}
+  .step{position:relative;padding:0 0 clamp(60px,10vh,110px);opacity:.35;transition:opacity .5s}
   .step:last-child{padding-bottom:0}
-  .step::before{content:"";position:absolute;left:-30px;top:4px;width:19px;height:19px;border-radius:50%;background:var(--bg-2);border:1px solid var(--accent)}
-  .stepper.in-view .step{opacity:1;transform:none}
-  .stepper.in-view .step:nth-child(1){transition-delay:.05s}
-  .stepper.in-view .step:nth-child(2){transition-delay:.18s}
-  .stepper.in-view .step:nth-child(3){transition-delay:.31s}
-  .stepper.in-view .step:nth-child(4){transition-delay:.44s}
-  .stepper.in-view .step:nth-child(5){transition-delay:.57s}
-  @media (prefers-reduced-motion:reduce){.step{opacity:1;transform:none;transition:none}}
-  .step h3{font-size:18px;margin-bottom:6px}
-  .step p{font-size:15px}
+  .step.active,.step.past{opacity:1}
+  .step .node{position:absolute;left:-46px;top:0;width:32px;height:32px;border-radius:50%;background:var(--bg-1);border:2px solid var(--line-2);display:grid;place-items:center;transition:all .4s var(--ease);font-size:13px;font-weight:600;color:var(--text-3)}
+  .step.past .node{border-color:var(--accent);background:var(--accent);color:#120600}
+  .step.active .node{border-color:var(--accent-2);box-shadow:0 0 0 6px rgba(255,160,71,.18);color:#fff;background:var(--bg-2)}
+  .step h3{font-size:clamp(28px,3.4vw,42px);letter-spacing:-.04em}
+  .step p{margin-top:12px;font-size:17px;max-width:38ch}
 
   /* vision */
-  .vision .wrap{max-width:760px}
-  .vision h2{font-size:clamp(28px,4vw,42px);margin-bottom:24px}
-  .vision p{font-size:19px;color:var(--text);max-width:60ch}
+  .vision-card{padding:clamp(36px,6vw,88px);border-radius:36px;text-align:left}
+  .vision-card h2{font-size:clamp(34px,5.2vw,64px);letter-spacing:-.04em;line-height:1.04;max-width:20ch}
+  .vision-card .big{margin-top:30px;font-size:clamp(18px,1.7vw,22px);color:var(--text-2);max-width:56ch;line-height:1.6}
+  .vals{margin-top:56px;display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+  @media (max-width:760px){.vals{grid-template-columns:1fr}}
+  .val{padding:28px 28px 0 0}
+  .val + .val{padding-left:28px;border-left:1px solid var(--line)}
+  @media (max-width:760px){.val{padding:24px 0 0}.val + .val{padding-left:0;border-left:none;border-top:1px solid var(--line);margin-top:24px}}
+  .val b{display:block;font-family:var(--display);font-size:24px;font-weight:600;letter-spacing:-.03em;color:var(--text)}
+  .val span{display:block;margin-top:6px;font-size:15px;color:var(--text-3)}
 
   /* download */
-  .download{text-align:left;border-top:1px solid var(--line)}
-  .download .ctas{margin-top:36px;display:flex;gap:14px;flex-wrap:wrap}
-  .external-links{margin-top:28px;display:flex;gap:24px;flex-wrap:wrap}
-  .external-links a{font-size:15px;color:var(--text-dim);text-decoration:none;border-bottom:1px solid var(--line);padding-bottom:2px;transition:color .2s,border-color .2s}
-  .external-links a:hover{color:var(--text);border-color:var(--text-dim)}
+  .dl{padding-top:40px}
+  .dl-panel{position:relative;border-radius:36px;overflow:hidden;padding:clamp(40px,7vw,96px) clamp(24px,6vw,88px);
+    background:radial-gradient(900px 420px at 15% 0%,rgba(255,106,26,.45),transparent 65%),radial-gradient(700px 400px at 100% 100%,rgba(255,160,71,.32),transparent 65%),var(--bg-1);
+    border:1px solid var(--line-2)}
+  .dl-panel h2{font-size:clamp(38px,6.4vw,82px);letter-spacing:-.045em;line-height:1}
+  .dl-panel > p{margin-top:18px;font-size:clamp(17px,1.6vw,20px);color:var(--text-2)}
+  .dl-cards{margin-top:56px;display:grid;grid-template-columns:1fr 1fr;gap:16px;position:relative}
+  @media (max-width:760px){.dl-cards{grid-template-columns:1fr}}
+  .dl-card{display:flex;align-items:center;gap:20px;padding:24px 26px;border-radius:24px;text-decoration:none;
+    background:rgba(8,8,8,.6);border:1px solid var(--line-2);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);
+    transition:transform .35s var(--ease),border-color .3s,background .3s}
+  .dl-card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.34);background:rgba(18,18,18,.8)}
+  .dl-ico{flex:none;width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:rgba(255,255,255,.07);border:1px solid var(--line)}
+  .dl-ico svg{width:28px;height:28px}
+  .dl-txt{flex:1;min-width:0}
+  .dl-txt b{display:block;font-family:var(--display);font-size:22px;font-weight:600;letter-spacing:-.03em}
+  .dl-txt small{display:block;margin-top:2px;font-size:14px;color:var(--text-3)}
+  .dl-go{flex:none;width:44px;height:44px;border-radius:50%;background:#fff;color:#0a0a0a;display:grid;place-items:center;transition:transform .3s var(--ease)}
+  .dl-card:hover .dl-go{transform:translateY(3px)}
+  .dl-go svg{width:20px;height:20px}
+  .external-links{margin-top:36px;display:flex;gap:10px;flex-wrap:wrap;position:relative}
+  .external-links a{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;font-size:14.5px;color:var(--text-2);text-decoration:none;border:1px solid var(--line);transition:all .25s}
+  .external-links a:hover{color:var(--text);border-color:var(--line-2);background:rgba(255,255,255,.05)}
 
-  footer{border-top:1px solid var(--line);padding:56px 0 40px}
-  .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:32px}
-  .foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:17px}
-  .foot-brand img{width:24px;height:24px;border-radius:6px;object-fit:cover}
-  .foot-tag{margin-top:10px;font-size:14px;max-width:34ch}
-  .foot-links{display:flex;gap:28px;list-style:none;padding:0;margin:0;flex-wrap:wrap}
-  .foot-links a{font-size:14px;color:var(--text-dim);text-decoration:none}
+  /* footer */
+  footer{padding:72px 0 calc(40px + env(safe-area-inset-bottom,0px))}
+  .foot-top{display:flex;justify-content:space-between;flex-wrap:wrap;gap:40px}
+  .foot-brand{display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:19px;letter-spacing:-.02em}
+  .foot-brand img{width:28px;height:28px;border-radius:8px;object-fit:cover}
+  .foot-tag{margin-top:14px;font-size:14.5px;max-width:34ch;color:var(--text-3)}
+  .foot-links{display:flex;gap:30px;list-style:none;padding:0;margin:0;flex-wrap:wrap;align-items:flex-start}
+  .foot-links a{font-size:14.5px;color:var(--text-2);text-decoration:none;transition:color .2s}
   .foot-links a:hover{color:var(--text)}
-  .foot-bottom{margin-top:44px;padding-top:24px;border-top:1px solid var(--line);font-size:13px;color:var(--text-dim)}
+  .foot-bottom{margin-top:56px;padding-top:26px;border-top:1px solid var(--line);font-size:13.5px;color:var(--text-3)}
+
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto}
+    *,*::before,*::after{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important}
+    .hero-in{opacity:1;transform:none}
+    .mark-flow{stroke-dasharray:none}
+    .step{opacity:1}
+  }
 </style>
-<link rel="icon" type="image/jpeg" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABQAFADASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAgMFBgABBAf/xAAtEAACAQMCBQQBAwUAAAAAAAABAgMABAUREhMhMUFhBiJRgXEUMkIzYpGh8P/EABoBAAIDAQEAAAAAAAAAAAAAAAEFAgMEAAb/xAAmEQABAwIGAgIDAAAAAAAAAAABAAIDERIEBRMxQVEhwRQiYYHx/9oADAMBAAIRAxEAPwCHVaYFrFFMUV4kle+WgtHtogKILUCVyXtre2mbazbQqglbaArTytARRBRSCtLZa6GWlsKmCuRqKYooFo2dYo2kc6KilifAqBQJp5TAOVGo1Go5jxVJfMQ5/fBcZH9FGx0SBI2dn8HTr8f9rUvDkbfCTLA8rjFxMlvcvwiJA53e5N3MAaDUCmLcsNKPdR3VPaWOzEHyxtW919Kw6Voio22uUsBHDcX0l0JdZOLJp7VPNenbaRqOqn8itWnrDGY63u8lf/0w3CtLYAGSUjmzadhzA1PIeTURlM5mMZ2HPH9QdmkIiEnJ4UnsJUsAdo6nsKWRVDvfXGW9SZGBrqLhYuGdWEEKnhrodfcf5HT5+hXomfubaG4hubYhra4ZR+0oV3cwdD1HmtE2TPZHfG66m6pgzhj5LHtoD+1xsKUwp7cqU1KAna2tcWcmgjxMkdxcLbxzkQmQgnaG69PANdq0m/tjdWTIiqZUIki3AEb15jUH/H3VsJaJWl21QqZw4xODd6KHw72WTntIYraN4seXCT7ObAck1Pz3+xVolgiuIWimQOjDTQjp+Pg1XY83j1ls3srOSESSFrz+Kqz8joDzIDDt5qZt8pb3zmHHSLdXB1CRxnkSB89APNMMxwkus3SqR+O0swGKj0TqeD6VSubrI47MXVs8lvw+GxiToNQu3cAOerDt0JJ6dalrS2tJ7q5wgx0UkFrK3FubhQzueXtB7adD4qKkmv7EgyYIXl3POY5bgtuSYkaqgI5aAjUj+381WrPNX+BzrNO7ytGxSRGJ+xzp25j2QGNpGoQkt7Hzh7gbAV6zwIVg4AiQQ6acMKAun4rzT1Hkbyzllx7XMrJbOFt1ZiRGvI+0dq9AGZsXxqX6zAwOAV+dT2I7GvNcpb3Wa9SbQqotxKFX3DUD5pXlEU0bnmQECnPaZZtLC9jQwgmvHS9Exl8uSxVteLy4qAkfB6H/AGDXQ1ZDBHa20VvCu2OJQijwKxqSvtLzbtVPow4MF2/K0hpq0hTTFNRIU1wPho4smMlbKjTKxcRSsQoY9SpHNSfseKiY8dkZPUN3d22PmsoJV2lBOiI7adSADqvjTv8AVWkGjBrVHj5oxQeeFilwMUhqVH4zFPaz8e5uDM6IIoE11WFB2HTU+dBy5VHepfSEOcnW6hlWC5A2uSuokHbX4PmrFurN1VfLn1da77KXw4dPSt+q8zv8J6mimS1jgJiOiK1ufbp5Pb7qzen/AEpFidtzcyca766jop/PerKTQE1pmzOeVlm3dOVRBlcET79+q8IWpTGjY0tjWIBMktTTVauZWpqtUyEU8NRhqQDRbqrIQTt1ZupW6s3ULVyYWoC1CWoS1SAXLZalMaxmpbNUwEV//9k=">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
+<div class="aurora" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
 
 <header>
-  <nav class="wrap">
-    <a href="#top" class="brand"><img class="brand-mark" alt="Infinity AI logo" width="26" height="26">Infinity AI</a>
+  <nav class="nav" id="nav" aria-label="Primary">
+    <a href="#top" class="brand"><img class="brand-mark" alt="Infinity AI logo" width="28" height="28">Infinity AI</a>
     <ul class="nav-links">
       <li><a href="#products">Products</a></li>
       <li><a href="#about">About</a></li>
       <li><a href="#download">Download</a></li>
     </ul>
     <div class="nav-cta">
-      <a href="#download" class="btn btn-primary">Get Infinity</a>
+      <a href="#download" class="btn btn-primary btn-sm">Get Infinity</a>
       <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobilePanel" aria-label="Open menu">☰</button>
     </div>
   </nav>
@@ -202,106 +354,272 @@
   </div>
 </header>
 
-<main id="top">
+<main id="main">
+<span id="top"></span>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="wrap">
-      <div>
-        <h1 class="hero-opacity">Choose your intelligence.<span class="sub">Keep control. Get things done.</span></h1>
-        <p class="lede hero-opacity">Infinity brings modern AI models and autonomous workflows into one place, so you decide how you work with AI — not the other way around.</p>
-        <div class="ctas hero-opacity">
+      <div class="hero-copy">
+        <h1 class="hero-in d1">Choose your intelligence.<span class="sub">Keep control. Get things done.</span></h1>
+        <p class="lede hero-in d3">Infinity brings modern AI models and autonomous workflows into one place, so you decide how you work with AI — not the other way around.</p>
+        <div class="ctas hero-in d4">
           <a href="#download" class="btn btn-primary">Get Infinity</a>
           <a href="#infinity-pro" class="btn btn-ghost">Explore Infinity Pro</a>
         </div>
       </div>
-      <div class="mark-wrap">
-        <svg class="infinity-mark" viewBox="0 0 200 120" aria-hidden="true">
-          <defs>
-            <linearGradient id="infGrad" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="#9b7ef2"/>
-              <stop offset="1" stop-color="#6a6ff2"/>
-            </linearGradient>
-          </defs>
-          <path class="mark-base" pathLength="100" d="M100,60 C70,20 20,20 20,60 C20,100 70,100 100,60 C130,20 180,20 180,60 C180,100 130,100 100,60 Z"/>
-          <path class="mark-flow" pathLength="100" d="M100,60 C70,20 20,20 20,60 C20,100 70,100 100,60 C130,20 180,20 180,60 C180,100 130,100 100,60 Z"/>
-        </svg>
+
+      <div class="stage hero-in d5">
+        <div class="stage-mark" aria-hidden="true">
+          <svg class="infinity-mark" viewBox="0 0 200 120">
+            <defs>
+              <linearGradient id="infGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#ffa047"/>
+                <stop offset="1" stop-color="#b9b6b2"/>
+              </linearGradient>
+            </defs>
+            <path class="mark-base" pathLength="100" d="M100,60 C70,20 20,20 20,60 C20,100 70,100 100,60 C130,20 180,20 180,60 C180,100 130,100 100,60 Z"/>
+            <path class="mark-flow" pathLength="100" d="M100,60 C70,20 20,20 20,60 C20,100 70,100 100,60 C130,20 180,20 180,60 C180,100 130,100 100,60 Z"/>
+          </svg>
+        </div>
+
+        <div class="app" role="img" aria-label="Preview of the Infinity app switching between models">
+          <div class="app-bar">
+            <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="app-title">Infinity</div>
+            <div style="width:47px" aria-hidden="true"></div>
+          </div>
+          <div class="app-body">
+            <aside class="side" aria-hidden="true">
+              <div class="side-new">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+                New chat
+              </div>
+              <div class="side-label">Recent</div>
+              <div class="side-item on">Compare three reports</div>
+              <div class="side-item">Research: market sizing</div>
+              <div class="side-item">Rewrite launch email</div>
+              <div class="side-item">Notes from uploaded files</div>
+            </aside>
+            <div class="chat">
+              <div class="msg-user">Compare these three reports and summarise the key differences.</div>
+              <div class="msg-ai">
+                <div class="avatar" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round"><path d="M12 12c-1.8-3.2-6-3.6-6 0s4.2 3.2 6 0 6-3.6 6 0-4.2 3.2-6 0z"/></svg>
+                </div>
+                <div class="ai-col">
+                  <div class="ai-meta"><b id="mockMode">Fast answers</b><span id="mockNote">Quick reply</span></div>
+                  <div class="lines" id="mockLines" aria-hidden="true">
+                    <span style="width:96%"></span><span style="width:88%"></span><span style="width:62%"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="composer">
+                <div class="ph">Ask anything, or attach your files…</div>
+                <div class="composer-row">
+                  <div class="chips" id="chips" role="group" aria-label="Choose a model type">
+                    <button class="chip on" type="button" data-i="0">Fast</button>
+                    <button class="chip" type="button" data-i="1">Deep</button>
+                    <button class="chip" type="button" data-i="2">Creative</button>
+                    <button class="chip" type="button" data-i="3">Long-context</button>
+                  </div>
+                  <div class="send" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="products" class="lede-section">
+  <!-- PRODUCTS -->
+  <section id="products">
     <div class="wrap">
-      <h2 class="eyebrow-free" style="font-size:clamp(28px,4vw,42px)">AI without the lock-in.</h2>
+      <div class="kicker">Products</div>
+      <h2 class="h2">AI without the lock-in.</h2>
       <p class="section-intro">Infinity AI builds products that let you work with different models and providers, while keeping the control in your hands.</p>
+
       <div class="products">
-        <div class="product">
-          <span class="tag">Everyday AI</span>
+        <article class="surface product spot">
+          <span class="pill">Everyday AI</span>
           <h3>Infinity</h3>
           <p>Chat across multiple models, bring your own files, and do focused research — with your provider choices in your hands. Available on desktop and Android.</p>
-        </div>
-        <div class="product">
-          <span class="tag">Autonomous work</span>
+          <div class="viz" aria-hidden="true">
+            <div class="viz-card">
+              <div class="mini-row">
+                <div class="mini-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
+                <div class="mini-txt">Chat across multiple models</div><div class="mini-tag">Switch anytime</div>
+              </div>
+              <div class="mini-row">
+                <div class="mini-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></div>
+                <div class="mini-txt">Bring your own files</div><div class="mini-tag">Your context</div>
+              </div>
+              <div class="mini-row">
+                <div class="mini-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
+                <div class="mini-txt">Focused research</div><div class="mini-tag">Built in</div>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="surface product spot">
+          <span class="pill">Autonomous work</span>
           <h3>Infinity Pro</h3>
           <p>Give AI a goal, and let it work through the task — researching, building, and checking its own output across multi-step workflows.</p>
+          <div class="viz" aria-hidden="true">
+            <div class="viz-card">
+              <div class="taskline"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></span>Research</div>
+              <div class="taskline"><span class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5L20 7"/></svg></span>Build</div>
+              <div class="taskline"><span class="tick run"></span>Check its own output</div>
+              <div class="taskline"><span class="tick wait"></span>Deliver the result</div>
+              <div class="bar"><i></i></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- CHOOSE INTELLIGENCE -->
+  <section class="choose">
+    <div class="wrap">
+      <div class="kicker">Choice</div>
+      <h2 class="h2">One place. Your choice of intelligence.</h2>
+      <p class="section-intro">AI is moving fast, and no single model is best at everything. Infinity is built around choice — switch between models suited to speed, depth, or creativity, without starting over.</p>
+
+      <div class="choose-grid">
+        <div class="tabs" role="tablist" aria-label="Types of intelligence" aria-orientation="vertical" id="tabs">
+          <button class="tab" role="tab" id="tab0" aria-selected="true" aria-controls="panel" data-i="0">Fast answers<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <button class="tab" role="tab" id="tab1" aria-selected="false" aria-controls="panel" data-i="1" tabindex="-1">Deep reasoning<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <button class="tab" role="tab" id="tab2" aria-selected="false" aria-controls="panel" data-i="2" tabindex="-1">Creative work<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+          <button class="tab" role="tab" id="tab3" aria-selected="false" aria-controls="panel" data-i="3" tabindex="-1">Long-context research<svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        </div>
+        <div class="surface tabpanel spot" id="panel" role="tabpanel" aria-labelledby="tab0" aria-live="polite">
+          <div>
+            <h3 id="panelTitle">Fast answers</h3>
+            <p class="cap" id="panelCap">Quick replies for everyday questions, so you keep moving.</p>
+          </div>
+          <div class="meters" aria-hidden="true">
+            <div><div class="meter-head"><span>Speed</span></div><div class="meter-track"><div class="meter-fill" id="mSpeed" style="width:94%"></div></div></div>
+            <div><div class="meter-head"><span>Depth</span></div><div class="meter-track"><div class="meter-fill alt" id="mDepth" style="width:28%"></div></div></div>
+          </div>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="choose">
+  <!-- CONTROL -->
+  <section id="about">
     <div class="wrap">
-      <div>
-        <h2 style="font-size:clamp(28px,4vw,40px)">One place. Your choice of intelligence.</h2>
-        <p style="margin-top:20px;font-size:17px">AI is moving fast, and no single model is best at everything. Infinity is built around choice — switch between models suited to speed, depth, or creativity, without starting over.</p>
+      <div class="kicker">Control</div>
+      <h2 class="h2">Your AI. Your control.</h2>
+      <p class="section-intro">Connect the providers you already use, or rely on Infinity's built-in defaults. Choose the models that fit each task. Change your setup whenever your needs change — nothing about Infinity is locked in.</p>
+
+      <div class="bento">
+        <div class="surface b1 spot">
+          <h3>Connect the providers you already use</h3>
+          <p>Bring the accounts you have today into one place, and keep working the way you like.</p>
+          <div class="providers" aria-hidden="true">
+            <div class="prov"><i></i>Your provider</div>
+            <div class="prov"><i></i>Another provider</div>
+            <div class="prov"><i></i>Built-in defaults</div>
+            <div class="prov dash"><i></i>Add more</div>
+          </div>
+        </div>
+        <div class="surface b2 spot">
+          <h3>Choose per task</h3>
+          <p>Pick the model that fits the job in front of you.</p>
+          <div class="toggle-demo" aria-hidden="true">
+            <div class="tg">Summaries<span class="sw on"></span></div>
+            <div class="tg">Drafting<span class="sw"></span></div>
+            <div class="tg">Research<span class="sw on"></span></div>
+          </div>
+        </div>
+        <div class="surface b3 spot">
+          <div class="b3-inner">
+            <div>
+              <h3>Change your setup whenever your needs change.</h3>
+              <p>Nothing about Infinity is locked in.</p>
+            </div>
+            <div class="free" aria-hidden="true"><span>No lock-in</span><span>Switch models</span><span>Switch providers</span></div>
+          </div>
+        </div>
       </div>
-      <ul class="intel-list" aria-hidden="true">
-        <li>Fast answers</li>
-        <li>Deep reasoning</li>
-        <li>Creative work</li>
-        <li>Long-context research</li>
-      </ul>
     </div>
   </section>
 
-  <section id="about" class="control">
-    <div class="wrap">
-      <h2 style="font-size:clamp(28px,4vw,40px)">Your AI. Your control.</h2>
-      <p style="margin-top:20px;font-size:17px">Connect the providers you already use, or rely on Infinity's built-in defaults. Choose the models that fit each task. Change your setup whenever your needs change — nothing about Infinity is locked in.</p>
-    </div>
-  </section>
-
+  <!-- INFINITY PRO -->
   <section id="infinity-pro" class="pro">
     <div class="wrap">
-      <h2 style="font-size:clamp(28px,4vw,40px)">Don't just ask AI. Give it a job.</h2>
-      <p style="margin-top:20px;font-size:17px">Some work takes more than a single answer. Infinity Pro takes a goal and carries it through — researching, drafting, checking its own output, and recovering when something doesn't go to plan.</p>
-      <div class="stepper" id="stepper">
-        <div class="step"><h3>Research</h3><p>Gathers the sources and context the task actually needs.</p></div>
-        <div class="step"><h3>Analyze</h3><p>Works through what it found and figures out an approach.</p></div>
-        <div class="step"><h3>Create</h3><p>Produces the report, document, or output the task calls for.</p></div>
-        <div class="step"><h3>Verify</h3><p>Checks its own work against the original goal.</p></div>
-        <div class="step"><h3>Done</h3><p>Delivers the result, ready for you to review.</p></div>
+      <div class="pro-grid">
+        <div class="pro-left">
+          <div class="kicker">Infinity Pro</div>
+          <h2 class="h2">Don't just ask AI. Give it a job.</h2>
+          <p class="section-intro">Some work takes more than a single answer. Infinity Pro takes a goal and carries it through — researching, drafting, checking its own output, and recovering when something doesn't go to plan.</p>
+          <div class="surface live" aria-hidden="true">
+            <div class="live-head"><span>Goal</span><span id="liveCount">Step 1 of 5</span></div>
+            <div class="live-goal">Your task, start to finish</div>
+            <div class="live-state" id="liveState"><span class="dot"></span><span id="liveLabel">Research</span></div>
+            <div class="prog"><i id="liveProg"></i></div>
+          </div>
+        </div>
+
+        <ol class="steps" id="steps">
+          <li class="rail" id="rail" aria-hidden="true" role="presentation"></li>
+          <li class="step active"><span class="node">1</span><h3>Research</h3><p>Gathers the sources and context the task actually needs.</p></li>
+          <li class="step"><span class="node">2</span><h3>Analyze</h3><p>Works through what it found and figures out an approach.</p></li>
+          <li class="step"><span class="node">3</span><h3>Create</h3><p>Produces the report, document, or output the task calls for.</p></li>
+          <li class="step"><span class="node">4</span><h3>Verify</h3><p>Checks its own work against the original goal.</p></li>
+          <li class="step"><span class="node">5</span><h3>Done</h3><p>Delivers the result, ready for you to review.</p></li>
+        </ol>
       </div>
     </div>
   </section>
 
+  <!-- VISION -->
   <section class="vision">
     <div class="wrap">
-      <h2>We're building AI for people who want more control.</h2>
-      <p>We think AI works best when it's accessible instead of gatekept, flexible instead of fixed, and understandable instead of a black box. Infinity is our attempt to build that — a small, honest AI company that would rather ship something useful than announce something huge.</p>
+      <div class="surface vision-card spot">
+        <h2>We're building AI for people who want more control.</h2>
+        <p class="big">We think AI works best when it's accessible instead of gatekept, flexible instead of fixed, and understandable instead of a black box. Infinity is our attempt to build that — a small, honest AI company that would rather ship something useful than announce something huge.</p>
+        <div class="vals">
+          <div class="val"><b>Accessible</b><span>Not gatekept.</span></div>
+          <div class="val"><b>Flexible</b><span>Not fixed.</span></div>
+          <div class="val"><b>Understandable</b><span>Not a black box.</span></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <section id="download" class="download">
+  <!-- DOWNLOAD -->
+  <section id="download" class="dl">
     <div class="wrap">
-      <h2 style="font-size:clamp(28px,4vw,42px)">Take Infinity with you.</h2>
-      <p style="margin-top:14px;font-size:18px">Available across your devices.</p>
-      <div class="ctas">
-        <a href="#" id="winDownload" class="btn btn-primary">Download for Windows</a>
-        <a href="#" id="androidDownload" class="btn btn-ghost">Get it for Android</a>
-      </div>
-      <div class="external-links">
-        <a href="#" id="githubLink">View on GitHub</a>
-        <a href="#" id="linkedinLink">LinkedIn</a>
+      <div class="dl-panel">
+        <h2>Take Infinity with you.</h2>
+        <p>Available across your devices.</p>
+
+        <div class="dl-cards">
+          <a href="#" id="winDownload" class="dl-card">
+            <span class="dl-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="#fff"><path d="M3 5.5 10.5 4.4v7.1H3zM11.5 4.3 21 3v8.5h-9.5zM3 12.5h7.5v7.1L3 18.5zM11.5 12.5H21V21l-9.5-1.3z"/></svg>
+            </span>
+            <span class="dl-txt"><b>Download for Windows</b><small>Desktop installer</small></span>
+            <span class="dl-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></svg></span>
+          </a>
+          <a href="#" id="androidDownload" class="dl-card">
+            <span class="dl-ico" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="#fff"><path d="M7 9h10v8.2a1.3 1.3 0 0 1-1.3 1.3H15v2.2a1.2 1.2 0 0 1-2.4 0v-2.2h-1.2v2.2a1.2 1.2 0 0 1-2.4 0v-2.2h-.7A1.3 1.3 0 0 1 7 17.2zM4.7 9.4a1.2 1.2 0 0 1 2.4 0v5.4a1.2 1.2 0 0 1-2.4 0zm12.2 0a1.2 1.2 0 0 1 2.4 0v5.4a1.2 1.2 0 0 1-2.4 0zM7.2 8.2a4.8 4.8 0 0 1 9.6 0zm2.2-1.7a.5.5 0 1 0 0 .01zm5.2 0a.5.5 0 1 0 0 .01z"/></svg>
+            </span>
+            <span class="dl-txt"><b>Get it for Android</b><small>APK download</small></span>
+            <span class="dl-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 21h14"/></svg></span>
+          </a>
+        </div>
+
+        <div class="external-links">
+          <a href="#" id="githubLink">View on GitHub</a>
+          <a href="#" id="linkedinLink">LinkedIn</a>
+        </div>
       </div>
     </div>
   </section>
@@ -312,7 +630,7 @@
   <div class="wrap">
     <div class="foot-top">
       <div>
-        <div class="foot-brand"><img class="brand-mark" alt="Infinity AI logo" width="24" height="24">Infinity AI</div>
+        <div class="foot-brand"><img class="brand-mark" alt="Infinity AI logo" width="28" height="28">Infinity AI</div>
         <p class="foot-tag">Choose your intelligence. Keep control. Get things done.</p>
       </div>
       <ul class="foot-links">
@@ -329,9 +647,10 @@
 
 <script>
 (function(){
-  // brand mark — single small embed reused across nav + footer
+  // brand mark — single small embed reused across nav, footer and favicon
   var LOGO_SRC = "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABQAFADASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAgMFBgABBAf/xAAtEAACAQMCBQQBAwUAAAAAAAABAgMABAUREhMhMUFhBiJRgXEUMkIzYpGh8P/EABoBAAIDAQEAAAAAAAAAAAAAAAEFAgMEAAb/xAAmEQABAwIGAgIDAAAAAAAAAAABAAIDERIEBRMxQVEhwRQiYYHx/9oADAMBAAIRAxEAPwCHVaYFrFFMUV4kle+WgtHtogKILUCVyXtre2mbazbQqglbaArTytARRBRSCtLZa6GWlsKmCuRqKYooFo2dYo2kc6KilifAqBQJp5TAOVGo1Go5jxVJfMQ5/fBcZH9FGx0SBI2dn8HTr8f9rUvDkbfCTLA8rjFxMlvcvwiJA53e5N3MAaDUCmLcsNKPdR3VPaWOzEHyxtW919Kw6Voio22uUsBHDcX0l0JdZOLJp7VPNenbaRqOqn8itWnrDGY63u8lf/0w3CtLYAGSUjmzadhzA1PIeTURlM5mMZ2HPH9QdmkIiEnJ4UnsJUsAdo6nsKWRVDvfXGW9SZGBrqLhYuGdWEEKnhrodfcf5HT5+hXomfubaG4hubYhra4ZR+0oV3cwdD1HmtE2TPZHfG66m6pgzhj5LHtoD+1xsKUwp7cqU1KAna2tcWcmgjxMkdxcLbxzkQmQgnaG69PANdq0m/tjdWTIiqZUIki3AEb15jUH/H3VsJaJWl21QqZw4xODd6KHw72WTntIYraN4seXCT7ObAck1Pz3+xVolgiuIWimQOjDTQjp+Pg1XY83j1ls3srOSESSFrz+Kqz8joDzIDDt5qZt8pb3zmHHSLdXB1CRxnkSB89APNMMxwkus3SqR+O0swGKj0TqeD6VSubrI47MXVs8lvw+GxiToNQu3cAOerDt0JJ6dalrS2tJ7q5wgx0UkFrK3FubhQzueXtB7adD4qKkmv7EgyYIXl3POY5bgtuSYkaqgI5aAjUj+381WrPNX+BzrNO7ytGxSRGJ+xzp25j2QGNpGoQkt7Hzh7gbAV6zwIVg4AiQQ6acMKAun4rzT1Hkbyzllx7XMrJbOFt1ZiRGvI+0dq9AGZsXxqX6zAwOAV+dT2I7GvNcpb3Wa9SbQqotxKFX3DUD5pXlEU0bnmQECnPaZZtLC9jQwgmvHS9Exl8uSxVteLy4qAkfB6H/AGDXQ1ZDBHa20VvCu2OJQijwKxqSvtLzbtVPow4MF2/K0hpq0hTTFNRIU1wPho4smMlbKjTKxcRSsQoY9SpHNSfseKiY8dkZPUN3d22PmsoJV2lBOiI7adSADqvjTv8AVWkGjBrVHj5oxQeeFilwMUhqVH4zFPaz8e5uDM6IIoE11WFB2HTU+dBy5VHepfSEOcnW6hlWC5A2uSuokHbX4PmrFurN1VfLn1da77KXw4dPSt+q8zv8J6mimS1jgJiOiK1ufbp5Pb7qzen/AEpFidtzcyca766jop/PerKTQE1pmzOeVlm3dOVRBlcET79+q8IWpTGjY0tjWIBMktTTVauZWpqtUyEU8NRhqQDRbqrIQTt1ZupW6s3ULVyYWoC1CWoS1SAXLZalMaxmpbNUwEV//9k=";
   document.querySelectorAll('.brand-mark').forEach(function(el){ el.src = LOGO_SRC; });
+  var fav = document.getElementById('favicon'); if(fav) fav.href = LOGO_SRC;
 
   // external links — placeholders until real URLs are supplied
   var CONFIG = {
@@ -345,6 +664,13 @@
     var el = document.getElementById(id);
     if(el) el.href = CONFIG[map[id]];
   });
+
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // nav state
+  var nav = document.getElementById('nav');
+  function onScroll(){ nav.classList.toggle('scrolled', window.scrollY > 24); }
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
 
   // mobile menu
   var menuBtn = document.getElementById('menuBtn');
@@ -362,21 +688,116 @@
     });
   });
 
-  // stepper reveal
-  var stepper = document.getElementById('stepper');
-  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(reduce){ stepper.classList.add('in-view'); }
-  else if('IntersectionObserver' in window){
-    var io = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ stepper.classList.add('in-view'); io.disconnect(); }
-      });
-    }, {threshold:.3});
-    io.observe(stepper);
-  } else {
-    stepper.classList.add('in-view');
+  // spotlight on surfaces
+  document.querySelectorAll('.spot').forEach(function(el){
+    el.addEventListener('pointermove', function(e){
+      var r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      el.style.setProperty('--my', (e.clientY - r.top) + 'px');
+    });
+  });
+
+  // shared modes
+  var MODES = [
+    {name:'Fast answers',  note:'Quick reply',          cap:'Quick replies for everyday questions, so you keep moving.', lines:[96,88,62],         speed:94, depth:28},
+    {name:'Deep reasoning',note:'Working it through',   cap:'More thinking time for problems with many moving parts.',   lines:[98,94,90,84,58],   speed:38, depth:96},
+    {name:'Creative work', note:'Drafting options',     cap:'Drafts, ideas and rewrites with a looser hand.',            lines:[70,92,54,86],      speed:66, depth:62},
+    {name:'Long-context research', note:'Reading your sources', cap:'Work through long documents and many sources in one thread.', lines:[99,97,95,92,70], speed:46, depth:84}
+  ];
+
+  // hero model switcher
+  var chips = Array.prototype.slice.call(document.querySelectorAll('#chips .chip'));
+  var mockMode = document.getElementById('mockMode');
+  var mockNote = document.getElementById('mockNote');
+  var mockLines = document.getElementById('mockLines');
+  var heroIdx = 0, heroTimer = null, heroPaused = false;
+  function setHero(i){
+    heroIdx = i; var m = MODES[i];
+    chips.forEach(function(c,k){ c.classList.toggle('on', k===i); c.setAttribute('aria-pressed', k===i ? 'true':'false'); });
+    mockMode.textContent = m.name; mockNote.textContent = m.note;
+    var html = '';
+    m.lines.forEach(function(w){ html += '<span style="width:'+w+'%"></span>'; });
+    mockLines.innerHTML = html;
   }
+  chips.forEach(function(c){
+    c.addEventListener('click', function(){ setHero(+c.dataset.i); heroPaused = true; });
+  });
+  setHero(0);
+  if(!reduce){
+    heroTimer = setInterval(function(){ if(!heroPaused) setHero((heroIdx+1)%MODES.length); }, 3200);
+  }
+
+  // choose-your-intelligence tabs
+  var tabs = Array.prototype.slice.call(document.querySelectorAll('#tabs .tab'));
+  var pTitle = document.getElementById('panelTitle');
+  var pCap = document.getElementById('panelCap');
+  var mSpeed = document.getElementById('mSpeed');
+  var mDepth = document.getElementById('mDepth');
+  var tabPanel = document.getElementById('panel');
+  function setTab(i, focus){
+    var m = MODES[i];
+    tabs.forEach(function(t,k){
+      var on = k===i;
+      t.setAttribute('aria-selected', on ? 'true':'false');
+      t.tabIndex = on ? 0 : -1;
+    });
+    tabPanel.setAttribute('aria-labelledby','tab'+i);
+    pTitle.textContent = m.name === 'Long-context research' ? 'Long-context research' : m.name;
+    pCap.textContent = m.cap;
+    mSpeed.style.width = m.speed + '%';
+    mDepth.style.width = m.depth + '%';
+    if(focus) tabs[i].focus();
+  }
+  tabs.forEach(function(t,k){
+    t.addEventListener('click', function(){ setTab(k); });
+    t.addEventListener('keydown', function(e){
+      var n = null;
+      if(e.key==='ArrowDown'||e.key==='ArrowRight') n = (k+1)%tabs.length;
+      if(e.key==='ArrowUp'||e.key==='ArrowLeft') n = (k-1+tabs.length)%tabs.length;
+      if(n!==null){ e.preventDefault(); setTab(n,true); }
+    });
+  });
+
+  // Infinity Pro — scroll-linked steps
+  var steps = Array.prototype.slice.call(document.querySelectorAll('#steps .step'));
+  var rail = document.getElementById('rail');
+  var liveCount = document.getElementById('liveCount');
+  var liveLabel = document.getElementById('liveLabel');
+  var liveProg = document.getElementById('liveProg');
+  var liveState = document.getElementById('liveState');
+  var LABELS = ['Research','Analyze','Create','Verify','Done'];
+  var stepsEl = document.getElementById('steps');
+  function setStep(i){
+    steps.forEach(function(s,k){
+      s.classList.toggle('active', k===i);
+      s.classList.toggle('past', k<i);
+    });
+    var last = steps.length-1;
+    var top = steps[i].offsetTop;
+    rail.style.height = (i===0 ? 16 : top + 16) + 'px';
+    liveCount.textContent = 'Step ' + (i+1) + ' of ' + steps.length;
+    liveLabel.textContent = LABELS[i];
+    liveProg.style.width = ((i+1)/steps.length*100) + '%';
+    liveState.classList.toggle('done', i===last);
+  }
+  function pickStep(){
+    var mid = window.innerHeight * 0.45, best = 0, bestD = 1e9;
+    steps.forEach(function(s,k){
+      var r = s.getBoundingClientRect();
+      var d = Math.abs((r.top + 16) - mid);
+      if(r.top - mid < 40 && d < bestD){ bestD = d; best = k; }
+    });
+    setStep(best);
+  }
+  var ticking = false;
+  window.addEventListener('scroll', function(){
+    if(ticking) return; ticking = true;
+    requestAnimationFrame(function(){ pickStep(); ticking = false; });
+  }, {passive:true});
+  window.addEventListener('resize', pickStep);
+  setStep(0); pickStep();
 })();
 </script>
 </body>
 </html>
+
